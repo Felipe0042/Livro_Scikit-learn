@@ -77,12 +77,28 @@ previsores[:,10] = LabelEncoder_previsores.fit_transform(previsores[:,10])
 # 2 - 0 1 0
 # 3 - 0 0 1
 
-onehotencoder = OneHotEncoder(categorical_features = [0,1,3,5,8,9,10])
-previsores = onehotencoder.fit_transform(previsores).toarray()
+from sklearn.compose import ColumnTransformer
+onehotencorder = ColumnTransformer(transformers=[("OneHot", OneHotEncoder(), [0,1,3,5,8,9,10])],remainder='passthrough')
+previsores = onehotencorder.fit_transform(previsores).toarray()
 
 
 
 # ================== Processamento ==============
+
+from keras.models import Sequential
+from keras.layers import Dense
+
+
+regressor = Sequential()
+#(316 + 1)/2 = 158 neuronios 
+regressor.add(Dense(units = 158 , activation = 'relo', input_dis = 316))
+regressor.add(Dense(units = 158 , activation = 'relo'))
+#como queremos o valor e nao a probabilidade não usamos a funcao sigmoide
+regressor.add(Dense(inits = 1, activation = 'linear'))
+regressor.compile(loss = 'mean_absolute_error', optimizer = 'adam',
+                  metrics = ['mean_absolute_error'])
+
+regressor.fit(previsores, preco_real, batch_size = 300, epochs = 2)
 
 
 
