@@ -23,8 +23,10 @@ some_digit = X[36000]
 some_digit_image = some_digit.reshape(28,28)
 
 #Tamanho da imagem, tipo de coloração, e interpolacao 
-#plt.imshow(some_digit_image, cmap = mpl.cm.binary, interpolation = "nearest")
-#plt.show()
+# =============================================================================
+# plt.imshow(some_digit_image, cmap = mpl.cm.binary, interpolation = "nearest")
+# plt.show()
+# =============================================================================
 
 
 #separar dados entre teste e treinamento
@@ -74,6 +76,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_score, recall_score, f1_score
 #quantas vezes ele esta certo quando detecta o valor procurado 
 precision_score(y_train_5, y_train_pred)
+
 #quantas vezes ele deixa passar o valor procurado
 recall_score(y_train_5, y_train_pred)
 
@@ -114,8 +117,8 @@ def plot_precision_recall_vs_threshold(precisions, recalls, thresholds):
     plt.ylim([0,1])
     
     
-#plot_precision_recall_vs_threshold(precisions, recalls, thresholds)
-#plt.show()
+plot_precision_recall_vs_threshold(precisions, recalls, thresholds)
+plt.show()
 
 #plt.plot(precisions, recalls)
 #plt.show()
@@ -123,9 +126,9 @@ def plot_precision_recall_vs_threshold(precisions, recalls, thresholds):
 
 #ajustar limiar para 70000
 
-#y_train_pred_90 = (y_scores > 70000)
-#precision_score(y_train_5, y_train_pred_90)
-#recall_score(y_train_5, y_train_pred_90)
+y_train_pred_90 = (y_scores > 70000)
+precision_score(y_train_5, y_train_pred_90)
+recall_score(y_train_5, y_train_pred_90)
 
 #ajustado para precisao de 90%, contudo a revocacao esta baixa 
 
@@ -147,8 +150,8 @@ def plot_roc_curve(fpr,tpr,label=None):
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
     
-#plot_roc_curve(fpr, tpr)
-#plt.show()
+plot_roc_curve(fpr, tpr)
+plt.show()
 
 
 #quanto mais distante da curva linear, melhor o resultado da metrica
@@ -165,7 +168,6 @@ roc_auc_score(y_train_5, y_scores)
 #vai utilizar um metodo predict
 #que retorna a probalidade de pertencer em %
 from sklearn.ensemble import RandomForestClassifier
-
 forest_clf = RandomForestClassifier(random_state=42)
 y_probas_forest = cross_val_predict(forest_clf, X_train, y_train_5,cv=3, method = "predict_proba")
 
@@ -180,6 +182,7 @@ plt.plot(fpr,tpr,"b:", label="SGD")
 plot_roc_curve(fpr_forest, tpr_forest, "Floresta Aleatoria")
 plt.legend(loc = "lower right")
 plt.show()
+
 
 
 
